@@ -1,0 +1,6 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import PuppyCard from './PuppyCard';
+import { puppies, parents } from '../data/puppies';
+export default function PuppyGrid() {
+    return (_jsxs("section", { className: "mt-10 space-y-6", children: [_jsxs("div", { className: "flex items-baseline justify-between gap-4", children: [_jsx("h2", { className: "text-xl md:text-2xl font-semibold tracking-tight", children: "Meet the Puppies" }), _jsx("p", { className: "text-xs md:text-sm text-slate-400", children: "Click a puppy to see more photos and their personality." })] }), _jsx("div", { className: "grid gap-4 md:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4", children: puppies.map((p) => (_jsx(PuppyCard, { to: `/puppy/${p.id}`, name: p.name, subtitle: "Available", image: p.mainImage, status: p.status }, p.id))) }), _jsx("div", { className: "mt-8 flex items-baseline justify-between gap-4", children: _jsx("h2", { className: "text-xl md:text-2xl font-semibold tracking-tight", children: "Meet the Parents" }) }), _jsx("div", { className: "grid gap-4 md:gap-6 grid-cols-2 md:grid-cols-3", children: parents.map((p) => (_jsx(PuppyCard, { to: `/parent/${p.id}`, name: p.name, subtitle: "Parent", image: p.mainImage }, p.id))) })] }));
+}

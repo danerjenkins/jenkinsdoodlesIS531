@@ -1,0 +1,4 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+export default function Contact() {
+    return (_jsxs("div", { children: [_jsx("h1", { children: "Contact Us" }), _jsx("p", { style: { marginTop: "1rem", maxWidth: "600px" }, children: "We're happy to answer questions or help you find the right puppy for your family." }), _jsxs("div", { style: { marginTop: "1.5rem", fontSize: "1rem" }, children: [_jsxs("p", { children: [_jsx("strong", { children: "Email:" }), " danerogerjenkins@gmail.com"] }), _jsxs("p", { children: [_jsx("strong", { children: "Phone:" }), " (702)767-3350"] }), _jsxs("p", { children: [_jsx("strong", { children: "Location:" }), " Provo, UT"] })] }), _jsx("a", { className: "button", href: "https://docs.google.com/forms/d/e/1FAIpQLSfFMgq2DekFJgc7sPLDrbngpqMusdNRUqiSlC6mRIbGPtIW6A/viewform?usp=header", target: "_blank", style: { marginTop: "1.5rem", display: "inline-block" }, children: "Apply for a Puppy" })] }));
+}

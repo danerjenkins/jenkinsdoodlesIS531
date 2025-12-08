@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/components/layout.tsx","./src/components/puppycard.tsx","./src/components/puppygrid.tsx","./src/data/puppies.ts","./src/pages/about.tsx","./src/pages/contact.tsx","./src/pages/home.tsx","./src/pages/parentdetail.tsx","./src/pages/puppydetail.tsx"],"version":"5.9.3"}

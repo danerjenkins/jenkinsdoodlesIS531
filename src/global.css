@@ -1,0 +1,419 @@
+/* -------------------------------------------------------
+   RESET
+------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  background: #fafafa;
+  color: #2d2d2d;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* -------------------------------------------------------
+   THEME VARIABLES
+------------------------------------------------------- */
+:root {
+  --bg: #ffffff;
+  --bg-subtle: #f6f6f6;
+  --bg-hero: #ffffff;
+
+  --text-main: #1a1a1a;
+  --text-muted: #757575;
+
+  --border: #e8e8e8;
+
+  --accent: #d4a94c; /* elegant gold */
+  --accent-hover: #c08f36;
+
+  --radius-card: 1.25rem;
+  --radius-sm: 0.75rem;
+
+  --shadow-soft: 0px 8px 24px rgba(0, 0, 0, 0.06);
+  --shadow-hover: 0px 12px 32px rgba(0, 0, 0, 0.1);
+
+  --transition: 0.25s ease;
+}
+
+/* -------------------------------------------------------
+   LAYOUT
+------------------------------------------------------- */
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* -------------------------------------------------------
+   HEADER
+------------------------------------------------------- */
+header {
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid var(--border);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1rem 2rem;
+  z-index: 1000;
+}
+
+header a {
+  color: var(--text-main);
+  text-decoration: none;
+  margin-right: 1.5rem;
+  font-weight: 500;
+  transition: color var(--transition);
+}
+
+header a:hover {
+  color: var(--accent);
+}
+
+/* -------------------------------------------------------
+   FOOTER
+------------------------------------------------------- */
+footer {
+  text-align: center;
+  padding: 2rem;
+  margin-top: 4rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+/* -------------------------------------------------------
+   TYPOGRAPHY
+------------------------------------------------------- */
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: 2.4rem;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: 1.9rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  color: #121212;
+}
+
+/* -------------------------------------------------------
+   BUTTON
+------------------------------------------------------- */
+.button {
+  display: inline-block;
+  padding: 0.8rem 1.8rem;
+  background: var(--accent);
+  color: #ffffff;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  font-weight: 600;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.button:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+/* ---------- ELEGANT PUPPY CARD ---------- */
+
+.puppy-card-wrapper {
+  position: relative;
+}
+
+.puppy-card-image {
+  width: 100%;
+  height: 260px;
+  object-fit: contain;
+  background: var(--bg-subtle);
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.puppy-card-info {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.puppy-card-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.puppy-card-meta {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.puppy-card-price {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-top: 0.35rem;
+}
+
+.puppy-card-status-badge {
+  position: absolute;
+  top: 0.9rem;
+  left: 0.9rem;
+  z-index: 5;
+}
+
+
+/* -------------------------------------------------------
+   IMAGES — HIGH-RES SAFE
+------------------------------------------------------- */
+
+/* Prevent cutting off dogs in cards */
+.card img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+
+  background: #ffffff;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ---------- RESPONSIVE FULL-WIDTH HERO ---------- */
+
+.hero-section {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.hero-image {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+/* show entire image, never crop, center vertically */
+.hero-image img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+/* overlay text stays visible on all screens */
+/* ---------- HERO OVERLAY (TOP-LEFT CORNER) ---------- */
+
+.hero-overlay {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+
+  z-index: 10;
+  color: #ffffff;
+
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.45);
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+.hero-overlay h2 {
+  color: #ffffff !important;
+}
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .hero-overlay {
+    top: 1rem;
+    left: 1rem;
+    font-size: 1.15rem;
+  }
+}
+
+/* Gallery photos — consistent elegant frame */
+.gallery-img {
+  width: 100%;
+  height: auto;
+  padding: 0.75rem;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+  object-fit: contain;
+}
+
+/* -------------------------------------------------------
+   BADGES
+------------------------------------------------------- */
+.badge {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+
+  padding: 0.55rem 1.1rem;;
+  border-radius: 0.6rem;
+  font-size: 2rem;
+  font-weight: 700;
+
+  backdrop-filter: blur(10px);
+}
+
+.badge-available {
+  background: rgba(34, 197, 94, 0.18);
+  color: #15803d;
+}
+
+.badge-reserved {
+  background: rgba(245, 158, 11, 0.18);
+  color: #b45309;
+}
+
+.badge-sold {
+  background: rgba(239, 68, 68, 0.18);
+  color: #b91c1c;
+}
+
+/* -------------------------------------------------------
+   GRID
+------------------------------------------------------- */
+.grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+/* -------------------------------------------------------
+   SPACING UTILITIES
+------------------------------------------------------- */
+.mt-1 {
+  margin-top: 0.5rem;
+}
+.mt-2 {
+  margin-top: 1rem;
+}
+.mt-3 {
+  margin-top: 1.5rem;
+}
+.mt-4 {
+  margin-top: 2rem;
+}
+.mt-5 {
+  margin-top: 3rem;
+}
+
+/* ---------- PUPPY DETAIL PAGE ---------- */
+
+.puppy-detail {
+  margin-top: 1.5rem;
+}
+
+/* Arrange the main image left and info right */
+.puppy-header {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  flex-wrap: wrap; /* mobile-friendly */
+}
+
+/* Main puppy image */
+/* Main puppy image (much smaller) */
+.puppy-main-image img {
+  width: 320px; /* smaller width */
+  max-height: 2600px; /* prevents tall images from taking over */
+  object-fit: contain; /* keep entire puppy visible */
+  background: var(--bg-subtle);
+  padding: 0.5rem;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  display: block;
+}
+
+/* Description */
+.puppy-info {
+  max-width: 600px;
+}
+
+.puppy-description {
+  margin-top: 1rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ---------- HORIZONTAL GALLERY ---------- */
+
+.puppy-gallery-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  margin-top: 1rem;
+  scroll-snap-type: x mandatory;
+}
+
+.puppy-gallery-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.puppy-gallery-scroll::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+.puppy-gallery-image {
+  min-width: 200px;
+  scroll-snap-align: start;
+  background: var(--bg);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+  padding: 0.5rem;
+}
+
+.puppy-gallery-image img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.header-logo {
+  width: 125px;
+  height: 125px;
+  object-fit: contain;
+  border-radius: 6px;
+  transition: transform 0.2s ease;
+}
+
+.header-logo:hover {
+  transform: scale(1.08);
+}
+
+/* Override card badge positioning for detail page */
+.puppy-info .badge {
+  position: relative !important;
+  top: 0 !important;
+  right: 0 !important;
+  margin-top: 0.5rem;
+  display: inline-block;
+  z-index: 5;
+}
