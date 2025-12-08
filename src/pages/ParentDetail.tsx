@@ -1,11 +1,24 @@
 import { useParams, Link } from "react-router-dom";
-import { parents } from "../data/puppies";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { getParent } from "../data/api";
+import type { ParentDog } from "../data/puppies";
 
 export default function ParentDetail() {
   const { id } = useParams();
-  const parent = parents.find((p) => p.id === id);
+  const [parent, setParent] = useState<ParentDog | null>(null);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    async function loadData() {
+      const data = await getParent(id!);
+      setParent(data);
+      setLoading(false);
+    }
+    loadData();
+  }, [id]);
+
+  if (loading) return <p>Loading...</p>;
   if (!parent) return <p>Parent dog not found.</p>;
 
   return (
@@ -23,16 +36,18 @@ export default function ParentDetail() {
         </div>
 
         <div className="puppy-info">
-          <h1>
-            {parent.name} <span style={{ fontSize: "1.2rem", opacity: 0.8 }}>
-              ({parent.role})
-            </span>
-          </h1>
+          <h1>{parent.name} <span style={{ fontSize: "1.2rem", opacity: 0.8 }}>
+            ({parent.role})
+          </span></h1>
 
           <p className="puppy-description">{parent.description}</p>
 
-          <h3 style={{ marginTop: "1rem" }}>DNA Summary</h3>
-          <p style={{ marginTop: "0.25rem" }}>{parent.dnaSummary}</p>
+          {parent.dnaSummary && (
+            <>
+              <h3 style={{ marginTop: "1rem" }}>DNA Summary</h3>
+              <p style={{ marginTop: "0.25rem" }}>{parent.dnaSummary}</p>
+            </>
+          )}
         </div>
       </div>
 
@@ -41,12 +56,8 @@ export default function ParentDetail() {
       </h2>
 
       <div className="puppy-gallery-scroll">
-        {parent.gallery.map((img) => (
-          <motion.div
-            key={img.src}
-            whileHover={{ scale: 1.05 }}
-            className="puppy-gallery-image"
-          >
+        {parent.gallery?.map((img) => (
+          <motion.div key={img.src} whileHover={{ scale: 1.05 }}>
             <img src={img.src} alt={img.alt} />
           </motion.div>
         ))}

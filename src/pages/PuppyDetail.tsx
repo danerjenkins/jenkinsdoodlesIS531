@@ -1,16 +1,31 @@
 import { useParams, Link } from "react-router-dom";
-import { puppies } from "../data/puppies";
 import { motion } from "framer-motion";
-// Set your prices here
-const FEMALE_PRICE = 2000;
-const MALE_PRICE = 1900;
+import { useState, useEffect } from "react";
+import { getPuppy } from "../data/api";
+import type { Puppy } from "../data/puppies";
+
+const FEMALE_PRICE = 1500;
+const MALE_PRICE = 1500;
 
 export default function PuppyDetail() {
   const { id } = useParams();
-  const puppy = puppies.find((p) => p.id === id);
+  const [puppy, setPuppy] = useState<Puppy | null>(null);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    async function loadData() {
+      const data = await getPuppy(id!);
+      setPuppy(data);
+      setLoading(false);
+    }
+    loadData();
+  }, [id]);
+
+  if (loading) return <p>Loading puppy...</p>;
   if (!puppy) return <p>Puppy not found.</p>;
-  const price = puppy.gender === "Female" ? FEMALE_PRICE : MALE_PRICE;
+
+  const price =
+    puppy.gender === "Female" ? FEMALE_PRICE : MALE_PRICE;
 
   return (
     <div className="puppy-detail">
@@ -44,40 +59,15 @@ export default function PuppyDetail() {
 
           <p className="puppy-description">{puppy.description}</p>
         </div>
-        
       </div>
-      <div
-        style={{
-          marginTop: "2rem",
-          padding: "1.25rem",
-          background: "var(--bg-subtle)",
-          borderRadius: "10px",
-          textAlign: "center",
-        }}
-      >
-        <Link
-          to="/about"
-          style={{
-            color: "var(--primary)",
-            fontWeight: 600,
-            fontSize: "1.15rem",
-            textDecoration: "none",
-          }}
-        >
-          Thinking about adopting a puppy? Click here to learn more →
-        </Link>
-      </div>
+
       <h2 className="section-title" style={{ marginTop: "2rem" }}>
         Gallery
       </h2>
 
       <div className="puppy-gallery-scroll">
-        {puppy.gallery.map((img) => (
-          <motion.div
-            key={img.src}
-            whileHover={{ scale: 1.05 }}
-            className="puppy-gallery-image"
-          >
+        {puppy.gallery?.map((img) => (
+          <motion.div key={img.src} whileHover={{ scale: 1.05 }}>
             <img src={img.src} alt={img.alt} />
           </motion.div>
         ))}

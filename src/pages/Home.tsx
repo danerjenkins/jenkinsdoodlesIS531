@@ -1,33 +1,30 @@
 import { Link } from "react-router-dom";
 import PuppyCard from "../components/PuppyCard";
-import { useEffect, useState } from "react";
-import { fetchPuppies, fetchParents } from "../data/api"; 
-import type { Puppy, ParentDog } from "../data/puppies";
-
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { getPuppies, getParents } from "../data/api";
+import type { Puppy, ParentDog } from "../data/puppies";
 
 export default function Home() {
   const [puppies, setPuppies] = useState<Puppy[]>([]);
-const [parents, setParents] = useState<ParentDog[]>([]);
-const [loading, setLoading] = useState(true);
+  const [parents, setParents] = useState<ParentDog[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-useEffect(() => {
-  async function load() {
-    try {
-      const [pups, prnts] = await Promise.all([
-        fetchPuppies(),
-        fetchParents()
-      ]);
-      setPuppies(pups);
-      setParents(prnts);
-    } catch {
-      console.error("Error loading data");
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const [pups, prnts] = await Promise.all([getPuppies(), getParents()]);
+        setPuppies(pups);
+        setParents(prnts);
+      } catch {
+        setError("Could not load data");
+      } finally {
+        setLoading(false);
+      }
     }
-  }
-  load();
-}, []);
+    loadData();
+  }, []);
 
   return (
     <>
@@ -70,41 +67,44 @@ useEffect(() => {
 
       <section style={{ marginBottom: "3rem" }}>
         <h2 className="section-title">Meet the Puppies</h2>
-        <div className="grid grid-3">
-          {loading ? (
-  <p>Loading puppies...</p>
-) : (
-          {puppies.map((p) => (
-            <PuppyCard
-              key={p.id}
-              to={`/puppy/${p.id}`}
-              name={p.name}
-              gender = {p.gender}
-              subtitle={`${p.gender} `}
-              image={p.mainImage}
-              status={p.status}
-              variant="puppy"
-            />
-          ))}
-          )}
-        </div>
 
+        {loading && <p>Loading puppies...</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
+
+        {!loading && !error && (
+          <div className="grid grid-3">
+            {puppies.map((p) => (
+              <PuppyCard
+                key={p.id}
+                to={`/puppy/${p.id}`}
+                name={p.name}
+                gender={p.gender}
+                subtitle={`${p.gender}`}
+                image={p.mainImage}
+                status={p.status}
+                variant="puppy"
+              />
+            ))}
+          </div>
+        )}
       </section>
 
       <section>
         <h2 className="section-title">Meet the Parents</h2>
-        <div className="grid grid-3">
-          {parents.map((p) => (
-            <PuppyCard
-              key={p.id}
-              to={`/parent/${p.id}`}
-              name={p.name}
-              subtitle="Parent"
-              image={p.mainImage}
-              variant="parent"
-            />
-          ))}
-        </div>
+        {!loading && !error && (
+          <div className="grid grid-3">
+            {parents.map((p) => (
+              <PuppyCard
+                key={p.id}
+                to={`/parent/${p.id}`}
+                name={p.name}
+                subtitle="Parent"
+                image={p.mainImage}
+                variant="parent"
+              />
+            ))}
+          </div>
+        )}
       </section>
     </>
   );
