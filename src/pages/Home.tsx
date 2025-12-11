@@ -2,21 +2,19 @@ import { Link } from "react-router-dom";
 import PuppyCard from "../components/PuppyCard";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { getPuppies, getParents } from "../data/api";
-import type { Puppy, ParentDog } from "../data/puppies";
+import { getPuppies } from "../data/api";
+import type { Puppy } from "../data/puppies";
 
 export default function Home() {
   const [puppies, setPuppies] = useState<Puppy[]>([]);
-  const [parents, setParents] = useState<ParentDog[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadData() {
       try {
-        const [pups, prnts] = await Promise.all([getPuppies(), getParents()]);
+        const [pups] = await Promise.all([getPuppies()]);
         setPuppies(pups);
-        setParents(prnts);
       } catch {
         setError("Could not load data");
       } finally {
@@ -76,7 +74,6 @@ export default function Home() {
             {puppies.map((p) => (
               <PuppyCard
                 key={p.id}
-                to={`/puppy/${p.id}`}
                 name={p.name}
                 gender={p.gender}
                 subtitle={`${p.gender}`}
@@ -89,23 +86,6 @@ export default function Home() {
         )}
       </section>
 
-      <section>
-        <h2 className="section-title">Meet the Parents</h2>
-        {!loading && !error && (
-          <div className="grid grid-3">
-            {parents.map((p) => (
-              <PuppyCard
-                key={p.id}
-                to={`/parent/${p.id}`}
-                name={p.name}
-                subtitle="Parent"
-                image={p.mainImage}
-                variant="parent"
-              />
-            ))}
-          </div>
-        )}
-      </section>
-    </>
+          </>
   );
 }

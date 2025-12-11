@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 type Props = {
-  to: string;
   name: string;
   subtitle?: string;
   image: string;
@@ -12,7 +11,6 @@ type Props = {
 };
 
 export default function PuppyCard({
-  to,
   name,
   subtitle,
   image,
@@ -36,7 +34,7 @@ export default function PuppyCard({
       transition={{ duration: 0.25 }}
       className={`card ${variant === "puppy" ? "puppy-card-wrapper" : ""}`}
     >
-      <Link to={to} style={{ textDecoration: "none" }}>
+      <Link to={`/home`} style={{ textDecoration: "none" }}>
         {/* Puppy-only status badge */}
         {variant === "puppy" && status && (
           <span
